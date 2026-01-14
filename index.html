@@ -1,0 +1,1362 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta property="og:image" content="https://ymouse91.github.io/rattaat/icon192.png">
+
+  <link rel="icon" sizes="192x192" href="./icon192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="./icon192.png">
+<title>Rattaat</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:rgba(255,255,255,.06);
+    --text:#e9eefc;
+    --muted:rgba(233,238,252,.70);
+
+    --gridGap:6px;
+    --cell:56px;
+
+    --t:#7c4dff; /* violetti */
+    --p:#ff4fae; /* pinkki */
+    --r:#ff3b30; /* punainen */
+    --o:#ff9500; /* oranssi */
+    --s:#4aa3ff; /* sininen */
+    --k:#ffd60a; /* keltainen */
+    --v:#33d17a; /* vihreä */
+  }
+
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background: radial-gradient(1200px 600px at 50% -20%, rgba(93,120,255,.25), transparent 55%),
+                radial-gradient(900px 600px at 20% 0%, rgba(255,80,180,.18), transparent 50%),
+                var(--bg);
+    color:var(--text);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    overflow-x:hidden;
+    -webkit-user-select:none;
+    user-select:none;
+    touch-action:manipulation;
+  }
+
+/* iOS/phone-safe: piirrä taustagradientti aina koko viewporttiin */
+body{
+  background: var(--bg); /* varaväri */
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(1200px 600px at 50% -20%, rgba(93,120,255,.25), transparent 55%),
+    radial-gradient(900px 600px at 20% 0%, rgba(255,80,180,.18), transparent 50%),
+    var(--bg);
+
+  /* auttaa iOS:ssa välttämään “sauman” ja välkkeen */
+  transform: translateZ(0);
+}
+
+  .app{
+    max-width:980px;
+    margin:0 auto;
+    padding:16px 12px 20px;
+  }
+
+  .topbar{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .title{display:flex;flex-direction:column;gap:6px;min-width:240px;flex:1;}
+  h1{margin:0;font-size:19px;letter-spacing:.2px;}
+  .sub{font-size:12.5px;color:var(--muted);line-height:1.25;}
+
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;}
+  button{
+    border:0;border-radius:12px;background:rgba(255,255,255,.12);
+    color:var(--text);padding:10px 12px;font-weight:700;cursor:pointer;
+    box-shadow: 0 8px 22px rgba(0,0,0,.25);
+  }
+  button:hover{ background:rgba(255,255,255,.16); }
+  button:active{ transform: translateY(1px); }
+  button.secondary{ background:rgba(255,255,255,.08); font-weight:650; }
+
+select{
+  appearance:auto;
+  -webkit-appearance:auto;
+  -moz-appearance:auto;
+
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:750;
+
+  background:#1b2238;
+  color:#e9eefc;
+
+  /* tärkeä: ohjaa selainta käyttämään tummaa natiivi-UI:ta */
+  color-scheme: dark;
+
+  box-shadow: 0 8px 22px rgba(0,0,0,.18);
+  min-width: 240px;
+}
+
+/* pudotuslistan rivit (toimii hyvin Firefox/Windowsissa) */
+select option{
+  background:#1b2238;
+  color:#e9eefc;
+}
+
+/* valittu rivi listassa (kaikki selaimet eivät tue, mutta ei haittaa) */
+select option:checked{
+  background:#2b3556;
+  color:#ffffff;
+}
+
+  .layout{display:grid;grid-template-columns:1fr;gap:14px;}
+
+  /* ====== BOARD ====== */
+  .boardWrap{
+    display:flex;align-items:center;justify-content:center;
+    padding:12px 8px;background:var(--panel);
+    border-radius:18px;box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  }
+  .boardStage{
+    position:relative;
+    padding:14px;border-radius:18px;
+    background: rgba(255,255,255,.03);
+    outline: 1px solid rgba(255,255,255,.10);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(5, var(--cell));
+    grid-template-rows: repeat(5, var(--cell));
+    gap:var(--gridGap);
+    padding:10px;border-radius:18px;
+    background: rgba(255,255,255,.05);
+    outline: 1px solid rgba(255,255,255,.12);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.18);
+  }
+
+  .cell{
+    width:var(--cell);height:var(--cell);
+    border-radius:16px;background: rgba(255,255,255,.04);
+    outline:1px solid rgba(255,255,255,.10);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.15);
+    position:relative;cursor:pointer;overflow:hidden;
+  }
+  .cell:hover{ outline-color: rgba(255,255,255,.18); }
+
+  .cell .dot{
+    position:absolute;inset:0;display:grid;place-items:center;
+    opacity:.65;pointer-events:none;
+  }
+  .peg{
+    width:10px;height:10px;border-radius:50%;
+    background: rgba(255,255,255,.10);
+    outline: 2px solid rgba(0,0,0,.25);
+    box-shadow: 0 3px 6px rgba(0,0,0,.25);
+  }
+
+  .part{position:absolute;inset:0;display:grid;place-items:center;}
+  .chip{
+    width:92%;height:92%;border-radius:16px;
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.18), 0 10px 18px rgba(0,0,0,.18);
+    position:relative;display:grid;place-items:center;
+  }
+  .chip.noGear::after{
+    content:"";position:absolute;width:32px;height:32px;border-radius:50%;
+    background: radial-gradient(circle, rgba(0,0,0,.30) 0 35%, transparent 36%),
+                radial-gradient(circle, rgba(255,255,255,.18) 0 55%, transparent 56%),
+                rgba(255,255,255,.07);
+    outline:1px solid rgba(0,0,0,.20);
+    opacity:.35;
+  }
+  .chip.gear::after{
+    content:"";position:absolute;width:38px;height:38px;border-radius:50%;
+    background:
+      radial-gradient(circle, rgba(0,0,0,.35) 0 30%, transparent 31%),
+      conic-gradient(from 0deg,
+        rgba(223,231,255,.9) 0 10deg, transparent 10deg 25deg,
+        rgba(223,231,255,.9) 25deg 35deg, transparent 35deg 50deg,
+        rgba(223,231,255,.9) 50deg 60deg, transparent 60deg 75deg,
+        rgba(223,231,255,.9) 75deg 85deg, transparent 85deg 100deg,
+        rgba(223,231,255,.9) 100deg 110deg, transparent 110deg 125deg,
+        rgba(223,231,255,.9) 125deg 135deg, transparent 135deg 150deg,
+        rgba(223,231,255,.9) 150deg 160deg, transparent 160deg 175deg,
+        rgba(223,231,255,.9) 175deg 185deg, transparent 185deg 200deg,
+        rgba(223,231,255,.9) 200deg 210deg, transparent 210deg 225deg,
+        rgba(223,231,255,.9) 225deg 235deg, transparent 235deg 250deg,
+        rgba(223,231,255,.9) 250deg 260deg, transparent 260deg 275deg,
+        rgba(223,231,255,.9) 275deg 285deg, transparent 285deg 300deg,
+        rgba(223,231,255,.9) 300deg 310deg, transparent 310deg 325deg,
+        rgba(223,231,255,.9) 325deg 335deg, transparent 335deg 350deg,
+        rgba(223,231,255,.9) 350deg 360deg
+      );
+    mask: radial-gradient(circle, transparent 0 35%, #000 36% 100%);
+    outline: 2px solid rgba(0,0,0,.25);
+    box-shadow: 0 6px 10px rgba(0,0,0,.22);
+  }
+
+  /* ====== BIG GEARS ====== */
+  .gearBig{
+    position:absolute;
+    border-radius:50%;
+    display:grid;place-items:center;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,.35) 0 32%, transparent 33%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0 48%, transparent 49%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.07) 0 63%, transparent 64%),
+      rgba(255,255,255,.05);
+    outline: 2px solid rgba(255,255,255,.14);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.18), 0 10px 22px rgba(0,0,0,.25);
+    pointer-events:none;
+  }
+  .gearBig::before{
+    content:"";
+    width:72%;height:72%;
+    border-radius:50%;
+    background:
+      conic-gradient(from 0deg,
+        rgba(223,231,255,.65) 0 8deg, transparent 8deg 22deg,
+        rgba(223,231,255,.65) 22deg 30deg, transparent 30deg 45deg,
+        rgba(223,231,255,.65) 45deg 53deg, transparent 53deg 67deg,
+        rgba(223,231,255,.65) 67deg 75deg, transparent 75deg 90deg,
+        rgba(223,231,255,.65) 90deg 98deg, transparent 98deg 112deg,
+        rgba(223,231,255,.65) 112deg 120deg, transparent 120deg 135deg,
+        rgba(223,231,255,.65) 135deg 143deg, transparent 143deg 157deg,
+        rgba(223,231,255,.65) 157deg 165deg, transparent 165deg 180deg,
+        rgba(223,231,255,.65) 180deg 188deg, transparent 188deg 202deg,
+        rgba(223,231,255,.65) 202deg 210deg, transparent 210deg 225deg,
+        rgba(223,231,255,.65) 225deg 233deg, transparent 233deg 247deg,
+        rgba(223,231,255,.65) 247deg 255deg, transparent 255deg 270deg,
+        rgba(223,231,255,.65) 270deg 278deg, transparent 278deg 292deg,
+        rgba(223,231,255,.65) 292deg 300deg, transparent 300deg 315deg,
+        rgba(223,231,255,.65) 315deg 323deg, transparent 323deg 337deg,
+        rgba(223,231,255,.65) 337deg 345deg, transparent 345deg 360deg
+      );
+    mask: radial-gradient(circle, transparent 0 42%, #000 43% 100%);
+    opacity:.9;
+  }
+
+  .spinCW{ animation: spin 1.3s linear infinite; }
+  .spinCCW{ animation: spinCCW 1.3s linear infinite; }
+  @keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+  @keyframes spinCCW{ from{ transform:rotate(0deg);} to{ transform:rotate(-360deg);} }
+
+  /* ====== TRAY ====== */
+  .tray{
+    background:var(--panel);
+    border-radius:18px;
+    padding:12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+	margin-top:30px;
+  }
+  .trayTop{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:10px;margin-bottom:10px;flex-wrap:wrap;
+  }
+  .trayTop .hint{font-size:12.5px;color:var(--muted);line-height:1.25;flex:1;min-width:240px;}
+  .status{font-size:13.5px;font-weight:850;color: var(--text);opacity:.95;white-space:nowrap; margin-top: 12px }
+
+  .pieceRows{display:flex;flex-direction:column;gap:10px;}
+
+  .pieceRow{display:grid;gap:10px;}
+  .pieceRow.row3{ grid-template-columns: repeat(3, minmax(92px, 1fr)); }
+  .pieceRow.row4{ grid-template-columns: repeat(4, minmax(92px, 1fr)); }
+
+  .pieceCard{
+    background: rgba(255,255,255,.05);
+    border-radius:16px;
+    padding:10px;
+    outline:1px solid rgba(255,255,255,.10);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.12);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .thumb{
+    width:80px;
+    height:80px;
+    border-radius:14px;
+    background: rgba(0,0,0,.18);
+    outline:1px solid rgba(255,255,255,.10);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .thumb.selected{
+    outline:2px solid rgba(223,231,255,.55);
+    box-shadow: 0 0 0 4px rgba(90,120,255,.12);
+  }
+  .thumb.used{ opacity:.35; filter:saturate(.7); }
+  .thumb svg{ width:100%; height:100%; }
+
+  .mirrorBtn{
+    width:78px;
+    padding:8px 10px;
+    border-radius:12px;
+    font-weight:850;
+    font-size:12px;
+    background: rgba(255,255,255,.08);
+    box-shadow: 0 8px 18px rgba(0,0,0,.18);
+  }
+
+  .footerNote{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.25;
+  }
+
+
+
+  @media (max-width:860px){
+    .pieceRow.row4{ grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+  }
+  @media (max-width:700px){
+    .pieceRow.row3{ grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+  }
+  @media (max-width:520px){
+    :root{ --cell:48px; --gridGap:7px; }
+    .pieceRow.row3{ grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    .pieceRow.row4{ grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    .thumb{ width:74px; height:62px; }
+    .mirrorBtn{ width:74px; }
+  }
+  @media (max-width:380px){
+    .pieceRow.row3{ grid-template-columns: repeat(1, minmax(150px, 1fr)); }
+    .pieceRow.row4{ grid-template-columns: repeat(1, minmax(150px, 1fr)); }
+  }
+  
+
+
+
+/* iPhone pysty – YKSI YHDISTETTY BLOKKI (ei ohjeita/statusta, 1-rivi ohjaimet, tiiviit miniatyyrit) */
+@media (hover: none) and (pointer: coarse)
+       and (max-width: 430px)
+       and (orientation: portrait){
+
+  /* ── piilota kaikki ylimääräinen teksti ── */
+  .sub{ display:none !important; }
+  .trayTop{ display:none !important; }      /* sisältää hint + status */
+  .footerNote{ display:none !important; }
+  /* #status, .status{ display:none !important; }   varmistus */
+
+  /* ── topbar: ohjaimet yhdelle riville ── */
+  .topbar{
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+h1{
+  display:block;
+  font-size:16px;
+  line-height:1.1;
+  margin:0;
+  white-space:nowrap;
+}
+
+
+
+  .title{
+    min-width: 0;
+    flex: 1;
+  }
+
+  .btnrow{
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  select{
+    min-width: 0;
+    width: 100%;
+    max-width: 150px;        /* säädä 135px jos iPhone SE */
+    padding: 7px 8px;
+    font-size: 13px;
+  }
+
+  button{
+    padding: 7px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* ── skaalaa pelialuetta hieman pienemmäksi ── */
+  .boardStage{
+    transform: scale(0.88);
+    transform-origin: top center;
+  }
+  .boardWrap{ padding: 6px 4px; }
+
+  /* ── tiivistä miniatyyrit ── */
+  .tray{ padding: 10px; }
+  .pieceRows{ gap: 8px; }
+  .pieceRow{ gap: 8px; }
+
+  .pieceCard{
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .thumb{
+    width: 62px;
+    height: 50px;
+    border-radius: 12px;
+  }
+
+  .mirrorBtn{
+    width: 62px;
+    padding: 7px 8px;
+    font-size: 11px;
+    border-radius: 10px;
+  }
+
+  /* top-rivi 3 palaa, alarivi 4 palaa */
+  .pieceRow.row3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .pieceRow.row4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+    .tray{margin-top:0px;
+  }
+}
+@media (hover: none) and (pointer: coarse)
+       and (max-width: 430px)
+       and (orientation: portrait){
+
+  /* Ei transform-skaalausta: pienennetään oikeasti mitat */
+  :root{
+    --cell: 44px;
+    --gridGap: 6px;
+  }
+
+  /* tiivistä boardWrapia vähän */
+  .boardWrap{ padding: 6px 4px; }
+  .boardStage{ padding: 10px; }  /* jos sinulla oli 14px tms */
+  .grid{ padding: 8px; }         /* jos haluat vielä tiiviimmäksi */
+}
+
+  /* iPad vaaka (landscape) */
+@media (min-width: 1024px) and (hover: none) and (orientation: landscape) {
+
+  /* =========================
+     PELIRUUDUKKO ISOMMAKSI
+     ========================= */
+
+  .board-wrapper {
+    transform: scale(1.18);
+    transform-origin: center;
+  }
+
+  /* jos käytössä on solukoko-muuttuja, tämä riittää yksinään:
+  :root {
+    --cell: 92px;
+  }
+  */
+
+  /* =========================
+     PALATARJOTIN TIIVIIMMÄKSI
+     ========================= */
+
+  .tray,
+  .pieces-panel {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .tray {
+    max-width: 340px;
+  }
+
+  /* jos palat gridissä */
+  .tray-grid {
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+  }
+
+}
+@media (hover: none) and (pointer: coarse)
+       and (min-width: 1024px)
+       and (orientation: landscape){
+
+  :root{
+    /* hieman suurempi pelilauta */
+    --cell: 72px;
+    --gridGap: 6px;
+  }
+
+  .app{
+    max-width: 1100px;
+  }
+
+  /* pelialue ja palat vierekkäin, ei liian korkeaa skrollia */
+  .layout{
+    grid-template-columns: auto 360px;
+    align-items: start;
+  }
+
+  .boardWrap{
+    min-height: calc(100vh - 160px);
+    align-items: center;
+  }
+  
+  .tray{
+    position: sticky;
+    top: 12px;
+  }
+
+  /* miniatyyrikortit isommiksi kosketusta varten */
+  .thumb{
+    width: 88px;
+    height: 88px;
+  }
+
+  .mirrorBtn{
+    width: 88px;
+  }
+  
+  .pieceRow{display:grid;gap:20px;}
+
+.pieceRows{
+
+  gap:20px;
+}
+
+  .pieceRow.row3,
+  .pieceRow.row4{
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+
+
+  
+  .trayTop {display:none}
+  .tray{ margin-top:0px;
+  }
+  
+  .boardWrap, .boardStage, .grid, .cell{
+  touch-action: manipulation;
+}
+
+}
+
+
+  
+</style>
+</head>
+
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="title">
+      <h1>Rattaat</h1>
+      <div class="sub">
+	  Tavoite: laita isot pyörät pyörimään! Kaikki palat on asetettava pelialustalle.
+        
+      </div>
+    </div>
+    <div class="btnrow">
+      <select id="puzzleSelect" title="Valitse pulma"></select>
+      <button id="btnNext" class="secondary">Seuraava</button>
+      <button id="btnReset" class="secondary">Tyhjennä</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="boardWrap">
+      <div id="boardStage" class="boardStage">
+        <div id="grid" class="grid" aria-label="pelialue"></div>
+        <div id="gearA" class="gearBig" aria-hidden="true"></div>
+        <div id="gearB" class="gearBig" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="tray">
+      <div class="trayTop">
+        <div class="hint">
+         Valitse pala miniatyyristä. Käännä palaa klikkaamalla. 
+         Klikkaa pelialustaa asettaaksesi palan. Klikkaa asettamaasi palaa poistaksesi sen.
+        </div>
+        
+      </div>
+
+      <div id="pieces" class="pieceRows"></div>
+
+      <div hidden class="footerNote">
+        (Isot rattaat ovat ruudun 10 oikealla ja ruudun 22 alapuolella.)
+      </div>
+	  <div class="status" id="status">Ladataan pulmia…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const W = 5, H = 5;
+
+  // Iso rattaat ovat ruudun 10 ja ruudun 22 vieressä.
+  // 1..25 (row-major): 10 => (r=1,c=4), 22 => (r=4,c=1)
+  const BIG_A_TOUCH = { r:1, c:4 }; // ruutu 10
+  const BIG_B_TOUCH = { r:4, c:1 }; // ruutu 22
+
+  const PIECES = {
+    t: ["ox","-o"],         // violetti
+    p: ["xo","-x"],         // pinkki
+    r: ["-xo","xo-"],       // punainen
+    o: ["oxx"],             // oranssi
+    s: ["-x-","ooo"],       // sininen
+    k: ["-o-","xxx"],       // keltainen
+    v: ["--x","xxo"]        // vihreä
+  };
+
+  // Näille ei tarjota peilausta (ei tuo uutta)
+  const NO_MIRROR = new Set(["o","s","k","p","t"]); // Näille ei tarjota peilausta (pelaajan kannalta turha)
+// Näille tarjotaan peilaus
+  const HAS_MIRROR = new Set(["r","v"]); // Peilaus vain näille
+const COLORS = {
+    t: css("--t"),
+    p: css("--p"),
+    r: css("--r"),
+    o: css("--o"),
+    s: css("--s"),
+    k: css("--k"),
+    v: css("--v")
+  };
+let wasSolved = false;
+
+  // ===== Pulmatiedosto: rattaat_pulmat.json =====
+  // Odotettu muoto (builderista):
+  // { format, game, version, board:{w,h,bigGears:[10,22]}, puzzles:[ {id,name,pieces:[{id,rot,mirror,anchor}]} ] }
+  let PUZZLES = [];
+  let currentPuzzleIndex = 0;
+
+  // ===== Muista mihin pulmaan jäätiin =====
+  const LS_KEY = "rattaat_lastPuzzle_v1";
+  function saveProgress(){
+    try{
+      const p = PUZZLES[currentPuzzleIndex];
+      const payload = {
+        id: p ? String(p.id) : null,
+        index: currentPuzzleIndex,
+        t: Date.now()
+      };
+      localStorage.setItem(LS_KEY, JSON.stringify(payload));
+    }catch(_e){}
+  }
+  function loadProgress(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw) return null;
+      const obj = JSON.parse(raw);
+      if(!obj || (obj.id == null && obj.index == null)) return null;
+      return { id: obj.id != null ? String(obj.id) : null, index: Number(obj.index) };
+    }catch(_e){
+      return null;
+    }
+  }
+
+  // Peli-tila
+  const state = {};
+  for (const id of Object.keys(PIECES)) {
+    state[id] = { id, rot: 0, mir: false, placed: null };
+  }
+  let selectedId = null;
+
+  // Lukitut palat (= pulman palat). Näitä ei poisteta Tyhjennä-napilla, eikä klikkaamalla.
+  let locked = new Set();
+
+  // UI
+  const boardStageEl = document.getElementById("boardStage");
+  const gridEl = document.getElementById("grid");
+  const piecesEl = document.getElementById("pieces");
+  const statusEl = document.getElementById("status");
+  const gearAEl = document.getElementById("gearA");
+  const gearBEl = document.getElementById("gearB");
+
+  const puzzleSelectEl = document.getElementById("puzzleSelect");
+  const btnNextEl = document.getElementById("btnNext");
+  const btnResetEl = document.getElementById("btnReset");
+
+function getStageScale(){
+  const t = getComputedStyle(boardStageEl).transform;
+  if(!t || t === "none") return 1;
+  // matrix(a, b, c, d, e, f) -> scaleX = a
+  const m = t.match(/matrix\(([^)]+)\)/);
+  if(!m) return 1;
+  const parts = m[1].split(",").map(s => parseFloat(s.trim()));
+  const a = parts[0];
+  return (Number.isFinite(a) && a > 0) ? a : 1;
+}
+
+  // Rakenna ruudukko
+  const cells = [];
+  gridEl.innerHTML = "";
+  for (let r=0; r<H; r++){
+    for (let c=0; c<W; c++){
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      dot.innerHTML = `<div class="peg"></div>`;
+      cell.appendChild(dot);
+
+      cell.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        onCellClick(r,c);
+      });
+
+      gridEl.appendChild(cell);
+      cells.push(cell);
+    }
+  }
+
+  // Events
+  btnResetEl.addEventListener("click", () => {
+    clearUserPlacementsOnly();     // UUSI: poista vain pelaajan palat
+    renderBoard();
+    renderTray();
+    updateSolvedState();
+    setStatus("Tyhjennetty (vain omat palat).");
+  });
+
+  btnNextEl.addEventListener("click", () => {
+    if (!PUZZLES.length) return;
+    currentPuzzleIndex = (currentPuzzleIndex + 1) % PUZZLES.length;
+    puzzleSelectEl.value = String(currentPuzzleIndex);
+    loadPuzzleFromJSON(PUZZLES[currentPuzzleIndex]);
+    saveProgress();
+  });
+
+  puzzleSelectEl.addEventListener("change", () => {
+    const idx = +puzzleSelectEl.value;
+    if (!Number.isFinite(idx) || idx < 0 || idx >= PUZZLES.length) return;
+    currentPuzzleIndex = idx;
+    loadPuzzleFromJSON(PUZZLES[currentPuzzleIndex]);
+    saveProgress();
+  });
+
+  // Big gear placement on resize
+  window.addEventListener("resize", () => {
+    placeBigGears();
+  });
+
+  // init
+  renderTray();
+  renderBoard();
+  placeBigGears();
+  updateSolvedState();
+  setStatus("Ladataan pulmia…");
+  loadPuzzlesAuto();
+
+  // ===== Helpers =====
+  function css(varName){
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  }
+
+  function idxRCToCellIndex(r,c){ return r*W + c; }
+
+  function cellRectFor(r,c){
+    const el = cells[idxRCToCellIndex(r,c)];
+    return el.getBoundingClientRect();
+  }
+
+function placeBigGears(){
+  const stageRect = boardStageEl.getBoundingClientRect();
+  const scale = getStageScale();
+
+  const gapLocal = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gridGap")) || 8;
+  const gapScreen = gapLocal * scale;
+
+  // Käytä oikeaa solukokoa näytöltä (sisältää skaalan)
+  const aCell = cellRectFor(BIG_A_TOUCH.r, BIG_A_TOUCH.c);
+  const cellScreen = aCell.width;
+
+  // Säädä tästä ison rattaan “tuntumaa”
+  const BIG_SCALE = 1.10; // esim 1.05..1.20
+  const sizeScreen = cellScreen * BIG_SCALE;
+
+  const sizeLocal = sizeScreen / scale;
+
+  // A: ruudun 10 oikealla puolella
+  const aCenterY = aCell.top + aCell.height / 2;
+  const aLeftScreen = (aCell.right - stageRect.left) + gapScreen;
+  const aTopScreen  = (aCenterY - stageRect.top) - sizeScreen / 2;
+
+  // B: ruudun 22 alapuolella
+  const bCell = cellRectFor(BIG_B_TOUCH.r, BIG_B_TOUCH.c);
+  const bCenterX = bCell.left + bCell.width / 2;
+  const bLeftScreen = (bCenterX - stageRect.left) - sizeScreen / 2;
+  const bTopScreen  = (bCell.bottom - stageRect.top) + gapScreen;
+
+  // Muunna screen -> local koordinaatteihin (koska stage skaalataan)
+  gearAEl.style.width  = sizeLocal + "px";
+  gearAEl.style.height = sizeLocal + "px";
+  gearAEl.style.left   = (aLeftScreen / scale) + "px";
+  gearAEl.style.top    = (aTopScreen  / scale) + "px";
+
+  gearBEl.style.width  = sizeLocal + "px";
+  gearBEl.style.height = sizeLocal + "px";
+  gearBEl.style.left   = (bLeftScreen / scale) + "px";
+  gearBEl.style.top    = (bTopScreen  / scale) + "px";
+}
+
+
+  function parseBaseShape(grid){
+    const occ = [];
+    for (let y=0; y<grid.length; y++){
+      const row = grid[y];
+      for (let x=0; x<row.length; x++){
+        const ch = row[x];
+        if (ch !== "-"){
+          occ.push({ x, y, gear: ch === "x" });
+        }
+      }
+    }
+    return { occ, w: grid[0].length, h: grid.length };
+  }
+
+  function transformOcc(base, rot, mir){
+    let pts = base.occ.map(p => ({ x:p.x, y:p.y, gear:p.gear }));
+
+    // mirror (vaaka)
+    if (mir){
+      pts = pts.map(p => ({ ...p, x: (base.w - 1) - p.x }));
+    }
+
+    let W0 = base.w, H0 = base.h;
+
+    if (rot === 90){
+      pts = pts.map(p => ({ ...p, x: p.y, y: (W0 - 1) - p.x }));
+      [W0,H0] = [H0,W0];
+    }else if (rot === 180){
+      pts = pts.map(p => ({ ...p, x: (W0 - 1) - p.x, y: (H0 - 1) - p.y }));
+    }else if (rot === 270){
+      pts = pts.map(p => ({ ...p, x: (H0 - 1) - p.y, y: p.x }));
+      [W0,H0] = [H0,W0];
+    }
+
+    // normalize to 0,0
+    let minX = Infinity, minY = Infinity;
+    for (const p of pts){
+      if (p.x < minX) minX = p.x;
+      if (p.y < minY) minY = p.y;
+    }
+    pts = pts.map(p => ({ ...p, x: p.x - minX, y: p.y - minY }));
+
+    let maxX = 0, maxY = 0;
+    for (const p of pts){
+      if (p.x > maxX) maxX = p.x;
+      if (p.y > maxY) maxY = p.y;
+    }
+    return { pts, w: maxX + 1, h: maxY + 1 };
+  }
+
+  function pieceCellsOnBoard(pid, placement){
+    const base = parseBaseShape(PIECES[pid]);
+    const tr = transformOcc(base, state[pid].rot, state[pid].mir);
+    const out = [];
+    for (const p of tr.pts){
+      const r = placement.anchorR + p.y;
+      const c = placement.anchorC + p.x;
+      out.push({ r, c, gear: p.gear });
+    }
+    return out;
+  }
+
+  function buildOccupancyMap(){
+    const map = new Map();
+    for (const pid of Object.keys(state)){
+      const pl = state[pid].placed;
+      if (!pl) continue;
+      for (const cell of pieceCellsOnBoard(pid, pl)){
+        const k = cell.r + "," + cell.c;
+        map.set(k, { pid, gear: cell.gear });
+      }
+    }
+    return map;
+  }
+
+  function findPieceAt(r,c, occMap){
+    const k = r + "," + c;
+    const v = occMap.get(k);
+    return v ? v.pid : null;
+  }
+
+  function clearAllPlacements(){
+    for (const pid of Object.keys(state)) state[pid].placed = null;
+    selectedId = null;
+  }
+
+  function clearUserPlacementsOnly(){
+    // UUSI: poista vain ne palat, jotka eivät ole lukittuja (eli pelaajan asettamat)
+    for (const pid of Object.keys(state)){
+      if (!locked.has(pid)){
+        state[pid].placed = null;
+      }
+    }
+    if (selectedId && locked.has(selectedId)) {
+      // saa silti valita lukitun palan miniatyyrissä, mutta ei hyötyä – pidetään valinta
+    }
+  }
+
+  function smartPlaceAt(pid, r, c, occMap){
+    const base = parseBaseShape(PIECES[pid]);
+    const tr = transformOcc(base, state[pid].rot, state[pid].mir);
+
+    const pts = [...tr.pts].sort((a,b) => (a.y - b.y) || (a.x - b.x));
+    const candidates = [];
+
+    for (const p of pts){
+      const anchorR = r - p.y;
+      const anchorC = c - p.x;
+
+      let ok = true;
+      for (const q of tr.pts){
+        const rr = anchorR + q.y;
+        const cc = anchorC + q.x;
+        if (rr < 0 || cc < 0 || rr >= H || cc >= W) { ok = false; break; }
+        const k = rr + "," + cc;
+        if (occMap.has(k)) { ok = false; break; }
+      }
+      if (ok) candidates.push({ anchorR, anchorC });
+    }
+
+    if (!candidates.length) return null;
+    candidates.sort((a,b) => (a.anchorR - b.anchorR) || (a.anchorC - b.anchorC));
+    return candidates[0];
+  }
+
+  function onCellClick(r,c){
+    const occMap = buildOccupancyMap();
+    const hit = findPieceAt(r,c, occMap);
+
+    // poisto: vain jos ei lukittu
+    if (hit){
+      if (locked.has(hit)){
+        setStatus("Tämä pala kuuluu pulmaan (lukittu).");
+        return;
+      }
+      state[hit].placed = null;
+      renderBoard();
+      renderTray();
+      updateSolvedState();
+      setStatus(`Poistettiin pala.`);
+      return;
+    }
+
+    if (!selectedId){
+      setStatus("Valitse pala.");
+      return;
+    }
+
+    const pid = selectedId;
+
+    // lukittua palaa ei saa asettaa uudelleen
+    if (locked.has(pid)){
+      setStatus("Tämä pala on pulmassa valmiiksi (lukittu).");
+      return;
+    }
+
+    if (state[pid].placed){
+      setStatus("Pala on jo laudalla (poista klikkaamalla sitä).");
+      return;
+    }
+
+    const placement = smartPlaceAt(pid, r, c, occMap);
+    if (!placement){
+      setStatus("Pala ei mahdu tuohon.");
+      return;
+    }
+
+    state[pid].placed = placement;
+    renderBoard();
+    renderTray();
+
+    setStatus("Asetettu.");
+	updateSolvedState();
+  }
+
+  function renderBoard(){
+    const occMap = buildOccupancyMap();
+
+    for (let r=0; r<H; r++){
+      for (let c=0; c<W; c++){
+        const cellEl = cells[r*W + c];
+        const old = cellEl.querySelector(".part");
+        if (old) old.remove();
+
+        const k = r + "," + c;
+        const v = occMap.get(k);
+        if (!v) continue;
+
+        const pid = v.pid;
+        const isGear = v.gear;
+
+        const part = document.createElement("div");
+        part.className = "part";
+
+        const chip = document.createElement("div");
+        chip.className = "chip " + (isGear ? "gear" : "noGear");
+        chip.style.background = COLORS[pid];
+
+        // lukitut palat hieman “vahvemmat”
+        chip.style.opacity = locked.has(pid) ? "0.98" : "0.92";
+
+        part.appendChild(chip);
+        cellEl.appendChild(part);
+      }
+    }
+
+    requestAnimationFrame(placeBigGears);
+  }
+
+  function renderTray(){
+    piecesEl.innerHTML = "";
+
+    const rowTop = document.createElement("div");
+    rowTop.className = "pieceRow row3";
+
+    const rowBottom = document.createElement("div");
+    rowBottom.className = "pieceRow row4";
+
+    const topIds = ["o","p","t"]; // rivi 1: kolmen ruudun palat
+const bottomIds = ["s","k","r","v"]; // rivi 2
+for (const pid of topIds) rowTop.appendChild(renderPieceCard(pid, false));
+    for (const pid of bottomIds) rowBottom.appendChild(renderPieceCard(pid, true));
+
+    const wrap = document.createElement("div");
+    wrap.className = "pieceRows";
+    wrap.appendChild(rowTop);
+    wrap.appendChild(rowBottom);
+
+    piecesEl.appendChild(wrap);
+  }
+
+function renderPieceCard(pid, showMirror){
+  const card = document.createElement("div");
+  card.className = "pieceCard";
+
+  // Koko kortti klikattavaksi: valitse / pyöräytä 90°
+  card.addEventListener("pointerdown", (e) => {
+    // Älä kaappaa peilausnapin kosketusta
+    if (e.target.closest(".mirrorBtn")) return;
+
+    e.preventDefault();
+    onThumbClick(pid);
+  });
+
+  const thumb = document.createElement("div");
+  thumb.className = "thumb";
+  if (pid === selectedId) thumb.classList.add("selected");
+  if (state[pid].placed) thumb.classList.add("used");
+  thumb.title = "Klikkaa: valitse / pyöräytä 90°";
+
+  // Thumb ei enää tarvitse omaa handleria (ettei tule tuplaa)
+  thumb.appendChild(renderThumbSVG(pid));
+  card.appendChild(thumb);
+
+  if (showMirror && HAS_MIRROR.has(pid)){
+    const btn = document.createElement("button");
+    btn.className = "mirrorBtn";
+    btn.textContent = "Peilaa";
+    btn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      onMirror(pid);
+    });
+    card.appendChild(btn);
+  }
+
+  return card;
+}
+
+  function renderThumbSVG(pid){
+    const base = parseBaseShape(PIECES[pid]);
+    const tr = transformOcc(base, state[pid].rot, state[pid].mir);
+
+    const pad = 8;
+    const cell = 18;
+    const w = tr.w * cell + pad*2;
+    const h = tr.h * cell + pad*2;
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+
+    const bg = document.createElementNS(svgNS, "rect");
+    bg.setAttribute("x", "0"); bg.setAttribute("y", "0");
+    bg.setAttribute("width", w); bg.setAttribute("height", h);
+    bg.setAttribute("rx", "14");
+    bg.setAttribute("fill", "rgba(255,255,255,.06)");
+    bg.setAttribute("stroke", "rgba(255,255,255,.10)");
+    svg.appendChild(bg);
+
+    for (const p of tr.pts){
+      const x = pad + p.x*cell;
+      const y = pad + p.y*cell;
+
+      const rr = document.createElementNS(svgNS, "rect");
+      rr.setAttribute("x", x);
+      rr.setAttribute("y", y);
+      rr.setAttribute("width", cell-2);
+      rr.setAttribute("height", cell-2);
+      rr.setAttribute("rx", "6");
+      rr.setAttribute("fill", COLORS[pid]);
+      rr.setAttribute("opacity", state[pid].placed ? "0.35" : "0.92");
+      rr.setAttribute("stroke", "rgba(0,0,0,.25)");
+      rr.setAttribute("stroke-width", "1");
+      svg.appendChild(rr);
+
+      const cc = document.createElementNS(svgNS, "circle");
+      cc.setAttribute("cx", x + (cell-2)/2);
+      cc.setAttribute("cy", y + (cell-2)/2);
+      cc.setAttribute("r", p.gear ? "6.2" : "4.8");
+      cc.setAttribute("fill", p.gear ? "rgba(223,231,255,.92)" : "rgba(0,0,0,.22)");
+      cc.setAttribute("opacity", p.gear ? "1" : "0.35");
+      svg.appendChild(cc);
+    }
+    return svg;
+  }
+
+function onThumbClick(pid){
+  if (selectedId !== pid){
+    selectedId = pid;
+    updateSolvedState();
+    renderTray();
+    return;
+  }
+  // myötäpäivään käyttäjän näkökulmasta
+  state[pid].rot = (state[pid].rot - 90 + 360) % 360;
+  updateSolvedState();
+  renderTray();
+}
+
+
+  function onMirror(pid){
+    if (NO_MIRROR.has(pid)) return;
+    state[pid].mir = !state[pid].mir;
+    selectedId = pid;
+    updateSolvedState();
+    renderTray();
+  }
+
+  function setStatus(text){
+    statusEl.textContent = text;
+  }
+
+  function allPiecesPlaced(){
+    return Object.keys(state).every(pid => !!state[pid].placed);
+  }
+
+  function connectedBigGears(){
+    const occMap = buildOccupancyMap();
+
+    const startKey = BIG_A_TOUCH.r + "," + BIG_A_TOUCH.c;
+    const goalKey  = BIG_B_TOUCH.r + "," + BIG_B_TOUCH.c;
+
+    const start = occMap.get(startKey);
+    const goal  = occMap.get(goalKey);
+
+    if (!start || !start.gear) return false;
+    if (!goal  || !goal.gear)  return false;
+
+    const q = [BIG_A_TOUCH];
+    const seen = new Set([startKey]);
+
+    while (q.length){
+      const cur = q.shift();
+      const k = cur.r + "," + cur.c;
+      if (k === goalKey) return true;
+
+      const nbrs = [
+        { r:cur.r-1, c:cur.c },
+        { r:cur.r+1, c:cur.c },
+        { r:cur.r, c:cur.c-1 },
+        { r:cur.r, c:cur.c+1 }
+      ];
+
+      for (const nb of nbrs){
+        if (nb.r < 0 || nb.c < 0 || nb.r >= H || nb.c >= W) continue;
+        const nk = nb.r + "," + nb.c;
+        if (seen.has(nk)) continue;
+        const v = occMap.get(nk);
+        if (!v || !v.gear) continue;
+        seen.add(nk);
+        q.push(nb);
+      }
+    }
+    return false;
+  }
+
+function updateSolvedState(){
+  const all = allPiecesPlaced();
+  const conn = connectedBigGears();
+  const solved = all && conn;
+
+  gearAEl.classList.toggle("spinCW", solved);
+  gearBEl.classList.toggle("spinCCW", solved);
+
+  // 🔔 ilmoitus vain kerran, kun tila vaihtuu ratkenneeksi
+  if (solved && !wasSolved){
+    setStatus("🎉 Iso pyörä pyörii! Pulma ratkaistu.");
+  }else if (!solved){
+    if (all && !conn){
+      setStatus("🧩 Ei yhteyttä.");
+    }else if (!all && conn){
+      setStatus("⚙️ Yhteys ok, aseta loput palat.");
+    }else{
+      setStatus(selectedId ? "Valittu." : "Valitse pala.");
+    }
+  }
+
+  wasSolved = solved;
+}
+
+
+  // ===== JSON loader for puzzles =====
+  async function loadPuzzlesAuto(){
+    try{
+      const res = await fetch("rattaat_pulmat.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const obj = await res.json();
+
+      // hyväksy builderin muoto
+      if (!obj || !Array.isArray(obj.puzzles)) throw new Error("puzzles puuttuu");
+
+      PUZZLES = obj.puzzles.map((p, i) => ({
+        id: (p.id != null ? String(p.id) : String(i+1).padStart(3,"0")),
+        name: (p.name != null ? String(p.name) : ("Pulma " + (i+1))),
+        pieces: Array.isArray(p.pieces) ? p.pieces : []
+      }));
+
+      if (!PUZZLES.length) throw new Error("Ei yhtään pulmaa");
+
+      buildPuzzleSelect();
+
+      // Palauta edellinen pulma (jos löytyy)
+      const saved = loadProgress();
+      let idx = 0;
+
+      if (saved){
+        if (saved.id != null){
+          const byId = PUZZLES.findIndex(p => String(p.id) === String(saved.id));
+          if (byId >= 0) idx = byId;
+          else if (Number.isFinite(saved.index) && saved.index >= 0 && saved.index < PUZZLES.length) idx = saved.index;
+        }else if (Number.isFinite(saved.index) && saved.index >= 0 && saved.index < PUZZLES.length){
+          idx = saved.index;
+        }
+      }
+
+      currentPuzzleIndex = idx;
+      puzzleSelectEl.value = String(idx);
+      loadPuzzleFromJSON(PUZZLES[idx]);
+      saveProgress();
+      setStatus("Pulmat ladattu.");
+    }catch(err){
+      // Fallback: tyhjä lista, mutta peli ei kaadu
+      PUZZLES = [];
+      buildPuzzleSelect();
+      clearAllPlacements();
+      locked = new Set();
+      renderBoard();
+      renderTray();
+      updateSolvedState();
+      setStatus("Pulmien lataus epäonnistui: " + err.message);
+    }
+  }
+
+  function buildPuzzleSelect(){
+    puzzleSelectEl.innerHTML = "";
+    if (!PUZZLES.length){
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "Ei pulmia";
+      puzzleSelectEl.appendChild(opt);
+      puzzleSelectEl.disabled = true;
+      btnNextEl.disabled = true;
+      return;
+    }
+    puzzleSelectEl.disabled = false;
+    btnNextEl.disabled = false;
+
+    PUZZLES.forEach((p, i) => {
+      const opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = `${p.id} – ${p.name}`.trim();
+      puzzleSelectEl.appendChild(opt);
+    });
+  }
+
+  async function registerSW(){
+    if(!("serviceWorker" in navigator)) return;
+    try{
+      await navigator.serviceWorker.register("./sw.js", { scope:"./" });
+    }catch(e){
+      console.warn(e);
+    }
+  }
+  
+  function loadPuzzleFromJSON(puz){
+    // Nollaa kaikki
+	wasSolved = false;   // 👈 TÄMÄ RIVI
+    clearAllPlacements();
+    locked = new Set();
+
+    // reset orientations
+    for (const pid of Object.keys(state)){
+      state[pid].rot = 0;
+      state[pid].mir = false;
+    }
+
+    // apply locked pieces from puzzle
+    for (const p of (puz.pieces || [])){
+      const pid = p.id;
+      if (!state[pid]) continue;
+
+      locked.add(pid);
+
+      state[pid].rot = ((p.rot % 360) + 360) % 360;
+      state[pid].mir = !!p.mirror;
+
+      const idx = (p.anchor|0) - 1; // 0..24
+      const r = Math.floor(idx / W);
+      const c = idx % W;
+
+      state[pid].placed = { anchorR: r, anchorC: c };
+    }
+
+    selectedId = null;
+    renderBoard();
+    renderTray();
+    updateSolvedState();
+    setStatus((puz.name || "Pulma") + " ladattu.");
+    saveProgress();
+  }
+
+})();
+</script>
+
+</body>
+</html>

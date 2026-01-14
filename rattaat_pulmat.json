@@ -1,0 +1,524 @@
+{
+  "format": "rattaat_puzzles",
+  "game": "Rattaat",
+  "version": 1,
+  "board": {
+    "w": 5,
+    "h": 5,
+    "bigGears": [
+      10,
+      22
+    ]
+  },
+  "puzzles": [
+    {
+      "id": "001",
+      "name": "junior 26",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 1
+        },
+        {
+          "id": "s",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 9
+        }
+      ]
+    },
+    {
+      "id": "002",
+      "name": "junior 27",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "r",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 17
+        }
+      ]
+    },
+    {
+      "id": "003",
+      "name": "junior 28",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ]
+    },
+    {
+      "id": "004",
+      "name": "junior 25",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        },
+        {
+          "id": "v",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 8
+        }
+      ]
+    },
+    {
+      "id": "005",
+      "name": "junior 29",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 4
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 14
+        }
+      ]
+    },
+    {
+      "id": "006",
+      "name": "junior 30",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 12
+        },
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ]
+    },
+    {
+      "id": "007",
+      "name": "junior 31",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 19
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 16
+        }
+      ]
+    },
+    {
+      "id": "008",
+      "name": "junior 32",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "t",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "v",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 3
+        }
+      ]
+    },
+    {
+      "id": "009",
+      "name": "junior 33",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 12
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ]
+    },
+    {
+      "id": "010",
+      "name": "junior 34",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "s",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 7
+        }
+      ]
+    },
+    {
+      "id": "011",
+      "name": "junior 35",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 13
+        }
+      ]
+    },
+    {
+      "id": "012",
+      "name": "junior 36",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 4
+        },
+        {
+          "id": "v",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 11
+        }
+      ]
+    },
+    {
+      "id": "013",
+      "name": "junior 37",
+      "pieces": [
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 4
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 9
+        }
+      ]
+    },
+    {
+      "id": "014",
+      "name": "junior 38",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 5
+        },
+        {
+          "id": "s",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        }
+      ]
+    },
+    {
+      "id": "015",
+      "name": "junior 39",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 7
+        }
+      ]
+    },
+    {
+      "id": "016",
+      "name": "junior 40",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        },
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": true,
+          "anchor": 1
+        }
+      ]
+    },
+    {
+      "id": "017",
+      "name": "junior 41",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        },
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        }
+      ]
+    },
+    {
+      "id": "018",
+      "name": "junior 42",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "s",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        }
+      ]
+    },
+    {
+      "id": "019",
+      "name": "junior 43",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 21
+        }
+      ]
+    },
+    {
+      "id": "020",
+      "name": "junior 44",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 4
+        }
+      ]
+    },
+    {
+      "id": "021",
+      "name": "junior 45",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ]
+    },
+    {
+      "id": "022",
+      "name": "junior 46",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 13
+        },
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 4
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        }
+      ]
+    },
+    {
+      "id": "023",
+      "name": "junior 47",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "p",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ]
+    },
+    {
+      "id": "024",
+      "name": "junior 48",
+      "pieces": []
+    }
+  ]
+}

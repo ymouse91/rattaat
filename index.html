@@ -267,7 +267,7 @@ select option:checked{
     gap:10px;margin-bottom:10px;flex-wrap:wrap;
   }
   .trayTop .hint{font-size:12.5px;color:var(--muted);line-height:1.25;flex:1;min-width:240px;}
-  .status{font-size:13.5px;font-weight:850;color: var(--text);opacity:.95;white-space:nowrap; margin-top: 12px }
+  .status{font-size:24px;font-weight:850;color: var(--text);opacity:.95;white-space:nowrap; margin-top: 12px }
 
   .pieceRows{display:flex;flex-direction:column;gap:10px;}
 
@@ -354,7 +354,7 @@ select option:checked{
   .sub{ display:none !important; }
   .trayTop{ display:none !important; }      /* sisältää hint + status */
   .footerNote{ display:none !important; }
-  /* #status, .status{ display:none !important; }   varmistus */
+  .status{font-size:13.5px}
 
   /* ── topbar: ohjaimet yhdelle riville ── */
   .topbar{
@@ -557,6 +557,7 @@ h1{
   .boardWrap, .boardStage, .grid, .cell{
   touch-action: manipulation;
 }
+  .status{font-size:18px;margin-top: 28px }
 
 }
 
@@ -773,6 +774,11 @@ function getStageScale(){
   registerSW();
 
   // ===== Helpers =====
+function isPieceOnBoard(pid){
+  return !!state[pid]?.placed;
+}
+
+
   function css(varName){
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
   }
@@ -957,7 +963,7 @@ function placeBigGears(){
     // poisto: vain jos ei lukittu
     if (hit){
       if (locked.has(hit)){
-        setStatus("Tämä pala kuuluu pulmaan (lukittu).");
+        setStatus("Tämä pala on lukittu.");
         return;
       }
       state[hit].placed = null;
@@ -977,12 +983,12 @@ function placeBigGears(){
 
     // lukittua palaa ei saa asettaa uudelleen
     if (locked.has(pid)){
-      setStatus("Tämä pala on pulmassa valmiiksi (lukittu).");
+      setStatus("Tämä pala on lukittu.");
       return;
     }
 
     if (state[pid].placed){
-      setStatus("Pala on jo laudalla (poista klikkaamalla sitä).");
+      setStatus("Pala on jo laudalla.");
       return;
     }
 
@@ -1148,15 +1154,26 @@ function onThumbClick(pid){
     renderTray();
     return;
   }
-  // myötäpäivään käyttäjän näkökulmasta
-  state[pid].rot = (state[pid].rot - 90 + 360) % 360;
+
+  // 🔒 Lukitus: jos pala on laudalla, ei pyöritetä miniatyyrissä
+  if(isPieceOnBoard(pid)){
+    setStatus?.("Pala on jo laudalla."); // jos sinulla on setStatus
+    return;
+  }
+
+  state[pid].rot = (state[pid].rot + 90) % 360;
   updateSolvedState();
   renderTray();
 }
 
 
+
   function onMirror(pid){
     if (NO_MIRROR.has(pid)) return;
+	  if(isPieceOnBoard(pid)){
+    setStatus?.("Pala on jo laudalla.");
+    return;
+  }
     state[pid].mir = !state[pid].mir;
     selectedId = pid;
     updateSolvedState();
@@ -1221,7 +1238,7 @@ function updateSolvedState(){
 
   // 🔔 ilmoitus vain kerran, kun tila vaihtuu ratkenneeksi
   if (solved && !wasSolved){
-    setStatus("🎉 Iso pyörä pyörii! Pulma ratkaistu.");
+    setStatus("🎉 Iso pyörä pyörii. Pulma ratkaistu!");
   }else if (!solved){
     if (all && !conn){
       setStatus("🧩 Ei yhteyttä.");

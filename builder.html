@@ -65,7 +65,8 @@
   button:active{ transform: translateY(1px); }
   button.secondary{ background:rgba(255,255,255,.08); font-weight:650; }
   button.danger{ background: rgba(255,90,90,.16); }
-
+  button.check{ background: rgba(90,255,90,.16); }
+  
   .layout{display:grid;grid-template-columns: 1fr; gap:14px;}
   @media (min-width: 980px){
     .layout{ grid-template-columns: 520px 1fr; align-items:start; }
@@ -245,6 +246,27 @@
     margin-top:6px;
   }
 
+
+/* Suljettu select */
+#puzSelect{
+  background: #1f2933;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+/* Avattu lista (Chrome / PC) */
+#puzSelect option{
+  background-color: #1f2933;
+  color: #e5e7eb;
+}
+
+/* Hover-valinta */
+#puzSelect option:checked,
+#puzSelect option:hover{
+  background-color: #374151;
+  color: #ffffff;
+}
+
   /* ====== PIECE TRAY ====== */
   .pieceRows{display:flex;flex-direction:column;gap:10px; margin-top:12px;}
   .pieceRow{display:grid;gap:10px;}
@@ -300,6 +322,13 @@
     .pieceRow.row3{ grid-template-columns: repeat(1, minmax(150px, 1fr)); }
     .pieceRow.row4{ grid-template-columns: repeat(1, minmax(150px, 1fr)); }
   }
+  
+  #status{
+    min-height: 170px;     /* varataan tila ettei UI hypi */
+    white-space: pre-line; /* rivinvaihdot näkyviin */
+    line-height: 1.4;
+  }
+
 </style>
 </head>
 
@@ -342,9 +371,11 @@
 
       <div class="row">
         <button id="btnSave">Tallenna → Uusi pulma</button>
+
         <button id="btnNew" class="secondary">Uusi tyhjä</button>
         <button id="btnClear" class="secondary">Tyhjennä lauta</button>
         <button id="btnDelete" class="danger">Poista pulma</button>
+		<button id="btnSolve" class="check">Tarkista ratkaistavuus</button>
       </div>
 
       <div class="row" style="justify-content:space-between;">
@@ -406,6 +437,42 @@
 
   let fileObj = FILE_TEMPLATE();
 
+  // Last computed solver metrics for the currently loaded puzzle (saved on Save/Export)
+  let lastSolveMetrics = null;
+
+  function formatMetricsLines(m){
+    if(!m) return null;
+    const lines = [];
+    // Summary
+    if(m.solvable === false || m.solutions === 0){
+      lines.push("❌ Ei ratkaisua (0 kpl)");
+    }else if(m.unique){
+      lines.push("✅ Löytyi ratkaisu (uniikki)");
+      lines.push("   (1 kpl)");
+    }else{
+      lines.push("✅ Löytyi useampi ratkaisu");
+      lines.push("   (2+ kpl)");
+    }
+
+    lines.push("");
+    lines.push("Mittarit:");
+    if(typeof m.nodes === "number") lines.push(`• Solmut: ${m.nodes}`);
+    if(typeof m.backtracks === "number") lines.push(`• Backtrackit: ${m.backtracks}`);
+    if(typeof m.decoys === "number") lines.push(`• Näennäisratkaisut: ${m.decoys}`);
+    if(typeof m.gearAdjacentCandidates === "number") lines.push(`• Ratassopivat asennot: ${m.gearAdjacentCandidates}`);
+    lines.push(`• Alkuhaarat: ${m.firstChoices == null ? "-" : m.firstChoices}`);
+    return lines;
+  }
+
+  function invalidateMetrics(){
+    lastSolveMetrics = null;
+    const idx = getCurrentPuzzleIndex();
+    if(idx >= 0 && idx < fileObj.puzzles.length){
+      fileObj.puzzles[idx].metrics = null;
+    }
+  }
+
+
   // ===== state for current board editing =====
   const state = {};
   for (const id of Object.keys(PIECES)) {
@@ -453,6 +520,7 @@
 
   // ===== buttons =====
   document.getElementById("btnClear").addEventListener("click", () => {
+    invalidateMetrics();
     clearBoardOnly();
     renderBoard();
     renderTray();
@@ -466,6 +534,10 @@
 
   document.getElementById("btnSave").addEventListener("click", () => {
     saveCurrentPuzzleAndCreateNext();
+  });
+
+  document.getElementById("btnSolve").addEventListener("click", () => {
+    checkSolvableCurrentBoard();
   });
 
   document.getElementById("btnDelete").addEventListener("click", () => {
@@ -631,6 +703,7 @@
     const hit = findPieceAt(r,c, occMap);
 
     if (hit){
+      invalidateMetrics();
       state[hit].placed = null;
       renderBoard(); renderTray(); refreshCounts();
       setStatus("Poistettiin pala.");
@@ -655,6 +728,7 @@
     }
 
     state[pid].placed = placement;
+    invalidateMetrics();
     renderBoard(); renderTray(); refreshCounts();
     setStatus("Asetettu.");
   }
@@ -798,7 +872,12 @@
       setStatus("Valittu pala.");
       return;
     }
-  state[pid].rot = (state[pid].rot - 90 + 360) % 360;
+    // Myötäpäivään kuten itse pelissä
+    state[pid].rot = (state[pid].rot + 90) % 360;
+    if(state[pid].placed){
+      invalidateMetrics();
+      renderBoard();
+    }
     renderTray();
     setStatus("Käännetty 90°.");
   }
@@ -807,6 +886,10 @@
     if (NO_MIRROR.has(pid)) return;
     state[pid].mir = !state[pid].mir;
     selectedId = pid;
+    if(state[pid].placed){
+      invalidateMetrics();
+      renderBoard();
+    }
     renderTray();
     setStatus("Peilattu.");
   }
@@ -852,7 +935,8 @@
     const puz = {
       id: nextId,
       name: "Pulma " + nextId,
-      pieces: []
+      pieces: [],
+      metrics: null
     };
     fileObj.puzzles.push(puz);
     refreshPuzzleSelectOptions(fileObj.puzzles.length - 1);
@@ -896,6 +980,9 @@
     if (idx < 0 || idx >= fileObj.puzzles.length) return;
     const puz = fileObj.puzzles[idx];
 
+    // Keep any previously computed metrics with the puzzle (may be null)
+    lastSolveMetrics = (puz.metrics != null) ? puz.metrics : null;
+
     // reset
     clearBoardOnly();
     for (const pid of Object.keys(state)){
@@ -923,7 +1010,12 @@
     renderBoard();
     renderTray();
     refreshCounts();
-    setStatus("Pulma ladattu muokattavaksi.");
+    const mLines = formatMetricsLines(lastSolveMetrics);
+    if(mLines){
+      setStatus(["Pulma ladattu (metrics tallennettu).", "", ...mLines].join("\n"));
+    }else{
+      setStatus("Pulma ladattu muokattavaksi.");
+    }
   }
 
   function clearBoardOnly(){
@@ -961,6 +1053,10 @@
     puz.name = puzNameEl.value.trim() || puz.name || ("Pulma " + puz.id);
     puz.pieces = boardToPuzzlePieces();
 
+
+    // Save computed metrics (or keep empty if not computed)
+    puz.metrics = (lastSolveMetrics != null) ? { ...lastSolveMetrics } : (puz.metrics != null ? puz.metrics : null);
+
     refreshPuzzleSelectOptions(idx);
 
     // pyydetty toiminto: "kun uusi pulma tallennetaan niin luodaan heti uusi pulma"
@@ -997,10 +1093,13 @@
 
   // ===== Export / Import =====
   function exportJSON(){
-    // päivitä current puzzle name valikossa (jos käyttäjä kirjoittaa mutta ei vaihtanut)
+    // Päivitä nykyinen pulma tiedostoon ennen exporttia, vaikka käyttäjä ei olisi painanut "Tallenna".
     const idx = getCurrentPuzzleIndex();
     if (idx >= 0){
-      fileObj.puzzles[idx].name = puzNameEl.value.trim() || fileObj.puzzles[idx].name;
+      const puz = fileObj.puzzles[idx];
+      puz.name = puzNameEl.value.trim() || puz.name;
+      puz.pieces = boardToPuzzlePieces();
+      puz.metrics = (lastSolveMetrics != null) ? { ...lastSolveMetrics } : (puz.metrics != null ? puz.metrics : null);
       refreshPuzzleSelectOptions(idx);
     }
 
@@ -1032,7 +1131,8 @@
       puzzles: obj.puzzles.map((p, i) => ({
         id: (p.id ? String(p.id) : String(i+1).padStart(3,"0")),
         name: (p.name ? String(p.name) : ("Pulma " + String(i+1).padStart(3,"0"))),
-        pieces: Array.isArray(p.pieces) ? p.pieces : []
+        pieces: Array.isArray(p.pieces) ? p.pieces : [],
+        metrics: (p.metrics != null) ? p.metrics : null
       }))
     };
 
@@ -1046,6 +1146,339 @@
     refreshPuzzleSelectOptions(0);
     loadPuzzleToBoard(0);
     setStatus("JSON tuotu. Voit muokata ja tallentaa.");
+  }
+
+
+
+  // ===== Solvability check (uses same rules as index.html) =====
+  // - 'x' = gear, 'o' = non-gear occupied, '-' = empty (does NOT block)
+  // - Connectivity only N/E/S/W (no diagonals)
+  // - Mirror only for r and v (HAS_MIRROR)
+
+function checkSolvableCurrentBoard(){
+  // Build fixed masks from currently placed (locked) pieces
+  const fixed = buildFixedMasksFromBoard();
+  if(!fixed.ok){
+    setStatus("❌ Laudalla on päällekkäisyyksiä / virheellinen asettelu.");
+    return;
+  }
+
+  const remaining = Object.keys(state).filter(pid => !state[pid].placed);
+  if(remaining.length === 0){
+    // Board already uses all pieces; just validate goal
+    const ok = isSolvedMasks(fixed.usedMask, fixed.gearMask);
+
+    // Even if everything is already placed, store a minimal metrics object so
+    // exporting/saving doesn't end up with null metrics.
+    lastSolveMetrics = {
+      solvable: !!ok,
+      unique: !!ok,          // if solved, this board-state is a valid solution
+      solutions: ok ? 1 : 0,
+      nodes: 0,
+      backtracks: 0,
+      decoys: 0,
+      gearAdjacentCandidates: 0,
+      firstChoices: null
+    };
+
+    // Persist metrics immediately to current puzzle so switching puzzles won't drop them
+    const _curIdx = getCurrentPuzzleIndex();
+    if(_curIdx >= 0 && fileObj && Array.isArray(fileObj.puzzles) && fileObj.puzzles[_curIdx]){
+      fileObj.puzzles[_curIdx].metrics = { ...lastSolveMetrics };
+    }
+
+    setStatus(ok ? "✅ Pulma on jo ratkaistu." : "❌ Kaikki palat on asetettu, mutta rataskytkentä puuttuu.");
+    return;
+  }
+
+  // Precompute placements for each remaining piece (all rotations + allowed mirrors)
+  const placementsByPid = new Map();
+  for(const pid of remaining){
+    placementsByPid.set(pid, precomputePlacements(pid));
+  }
+
+  // Ratassopivat asennot: kaikki lailliset asennot (ankkuri × kierto × peilaus),
+  // joissa palan ratas (x) koskettaa jompaa kumpaa isoa ratasta (vain vaaka/pysty).
+  const idxA = BIG_A_TOUCH.r * W + BIG_A_TOUCH.c;
+  const idxB = BIG_B_TOUCH.r * W + BIG_B_TOUCH.c;
+  const touchBits = (1 << idxA) | (1 << idxB);
+
+  let gearAdjacentCandidates = 0;
+  for(const pid of remaining){
+    const all = placementsByPid.get(pid) || [];
+    for(const pl of all){
+      if((pl.occMask & fixed.usedMask) !== 0) continue;     // ei saa törmätä lukittuihin
+      if((pl.gearMask & touchBits) === 0) continue;         // ei kosketa isoa ratasta
+      gearAdjacentCandidates++;                              // tämä asento kelpaa aloitus-kandidaatiksi
+    }
+  }
+
+  const fixedPlaced = Object.keys(state).filter(pid => !!state[pid].placed).length;
+
+  const limit = 2; // count up to 2 (0,1,2+)
+  const res = dfsCountSolutionsWithStats(
+    fixed.usedMask,
+    fixed.gearMask,
+    remaining,
+    placementsByPid,
+    limit,
+    fixedPlaced
+  );
+
+  const count = res.found;
+  const st = res.stats;
+
+
+  // Store metrics so they can be saved into the puzzle JSON on next Save/Export
+  lastSolveMetrics = {
+    solvable: count > 0,
+    unique: count === 1,
+    solutions: count,
+    nodes: st.nodes,
+    backtracks: st.backtracks,
+    decoys: st.deadEnds,
+    gearAdjacentCandidates: gearAdjacentCandidates,
+    firstChoices: (st.firstChoices == null ? null : st.firstChoices)
+  };
+
+  // Persist metrics immediately to current puzzle so switching puzzles won't drop them
+  const _curIdx2 = getCurrentPuzzleIndex();
+  if(_curIdx2 >= 0 && fileObj && Array.isArray(fileObj.puzzles) && fileObj.puzzles[_curIdx2]){
+    fileObj.puzzles[_curIdx2].metrics = { ...lastSolveMetrics };
+  }
+
+  const lines = [];
+
+  if(count <= 0){
+    lines.push("❌ Ei ratkaisua (0 kpl)");
+  }else if(count === 1){
+    lines.push("✅ Löytyi ratkaisu (uniikki)");
+    lines.push("   (1 kpl)");
+  }else{
+    lines.push("✅ Löytyi useampi ratkaisu");
+    lines.push("   (2+ kpl)");
+  }
+
+  lines.push("");           // tyhjä rivi selkeyden vuoksi
+  lines.push("Mittarit:");
+  lines.push(`• Solmut: ${st.nodes}`);
+  lines.push(`• Backtrackit: ${st.backtracks}`);
+  lines.push(`• Näennäisratkaisut: ${st.deadEnds}`);
+  lines.push(`• Ratassopivat asennot: ${gearAdjacentCandidates}`);																  
+  lines.push(`• Alkuhaarat: ${st.firstChoices == null ? "-" : st.firstChoices}`);
+
+  setStatus(lines.join("\n"));
+}
+
+
+  function buildFixedMasksFromBoard(){
+    let usedMask = 0;
+    let gearMask = 0;
+
+    for(const pid of Object.keys(state)){
+      const pl = state[pid].placed;
+      if(!pl) continue;
+
+      const base = parseBaseShape(PIECES[pid]);
+      const tr = transformOcc(base, state[pid].rot, state[pid].mir);
+
+      for(const p of tr.pts){
+        const r = pl.anchorR + p.y;
+        const c = pl.anchorC + p.x;
+        if(r < 0 || c < 0 || r >= H || c >= W) return { ok:false };
+        const idx = r*W + c;
+        const bit = 1 << idx;
+        if(usedMask & bit) return { ok:false };
+        usedMask |= bit;
+        if(p.gear) gearMask |= bit;
+      }
+    }
+
+    return { ok:true, usedMask, gearMask };
+  }
+
+  function precomputePlacements(pid){
+    const base = parseBaseShape(PIECES[pid]);
+
+    const mirrors = HAS_MIRROR.has(pid) ? [false, true] : [false];
+    const rots = [0, 90, 180, 270];
+
+    const out = [];
+    const seen = new Set();
+
+    for(const mir of mirrors){
+      for(const rot of rots){
+        const tr = transformOcc(base, rot, mir);
+
+        // Dedup identical shapes (symmetries)
+        const sigPts = tr.pts
+          .slice()
+          .sort((a,b)=> (a.y-b.y) || (a.x-b.x) || ((a.gear?1:0)-(b.gear?1:0)))
+          .map(p => `${p.x}:${p.y}:${p.gear?1:0}`)
+          .join('|');
+        const sig = `${tr.w}x${tr.h}|${sigPts}`;
+        if(seen.has(sig)) continue;
+        seen.add(sig);
+
+        for(let anchorR=0; anchorR<=H-tr.h; anchorR++){
+          for(let anchorC=0; anchorC<=W-tr.w; anchorC++){
+            let occMask = 0;
+            let gMask = 0;
+            for(const p of tr.pts){
+              const r = anchorR + p.y;
+              const c = anchorC + p.x;
+              const idx = r*W + c;
+              const bit = 1 << idx;
+              occMask |= bit;
+              if(p.gear) gMask |= bit;
+            }
+            out.push({ pid, rot, mir, anchorR, anchorC, occMask, gearMask:gMask });
+          }
+        }
+      }
+    }
+
+    return out;
+  }
+
+  function dfsCountSolutionsWithStats(usedMask, gearMask, remaining, placementsByPid, limit, fixedPlaced){
+    const stats = {
+      nodes: 0,
+      backtracks: 0,
+      deadEnds: 0,
+      firstChoices: null,
+      solutionDepth: null
+    };
+
+    // Track when the big gears become connected along the current branch.
+    function dfs(usedMask, gearMask, remaining, limit, connectedAt){
+      if(limit <= 0) return 0;
+      stats.nodes++;
+
+      if(remaining.length === 0){
+        if(isSolvedMasks(usedMask, gearMask)){
+          if(stats.solutionDepth == null && connectedAt != null) stats.solutionDepth = connectedAt;
+          return 1;
+        }
+        stats.deadEnds++;
+        return 0;
+      }
+
+      // MRV: pick the piece with least compatible placements
+      let bestPid = null;
+      let bestList = null;
+      let bestCount = Infinity;
+
+      for(const pid of remaining){
+        const all = placementsByPid.get(pid) || [];
+        // filter by collision
+        let cnt = 0;
+        for(const pl of all){
+          if((pl.occMask & usedMask) === 0) cnt++;
+          if(cnt >= bestCount) break;
+        }
+        if(cnt === 0) return 0;
+        if(cnt < bestCount){
+          bestCount = cnt;
+          bestPid = pid;
+          bestList = all;
+          if(bestCount === 1) break;
+        }
+      }
+
+      const nextRemaining = remaining.filter(p => p !== bestPid);
+
+      // simple ordering: try placements that add gears earlier (helps)
+      const ordered = bestList.slice().filter(pl => (pl.occMask & usedMask) === 0);
+      ordered.sort((a,b) => {
+        const ga = popcount32(a.gearMask);
+        const gb = popcount32(b.gearMask);
+        return gb - ga;
+      });
+
+      // Record initial branching (once)
+      if(stats.firstChoices == null){
+        stats.firstChoices = ordered.length;
+      }
+
+      let found = 0;
+      for(const pl of ordered){
+        const newUsed = usedMask | pl.occMask;
+        const newGear = gearMask | pl.gearMask;
+
+        // Detect when big gears become connected along this branch.
+        let newConnectedAt = connectedAt;
+        if(newConnectedAt == null){
+          const idxA = BIG_A_TOUCH.r * W + BIG_A_TOUCH.c;
+          const idxB = BIG_B_TOUCH.r * W + BIG_B_TOUCH.c;
+          const bitA = 1 << idxA;
+          const bitB = 1 << idxB;
+          if((newGear & bitA) && (newGear & bitB) && gearConnected(newGear, idxA, idxB)){
+            // remaining[] contains only NOT-yet-placed pieces (fixed pieces are excluded from it),
+            // so total placed so far = totalPieces(7) - remainingCount.
+            const placedSoFar = 7 - nextRemaining.length;
+            newConnectedAt = placedSoFar;
+          }
+        }
+
+        found += dfs(newUsed, newGear, nextRemaining, limit - found, newConnectedAt);
+        if(found >= limit) return found;
+      }
+
+      if(found === 0) stats.backtracks++;
+      return found;
+    }
+
+    const found = dfs(usedMask, gearMask, remaining, limit, null);
+    return { found, stats };
+  }
+
+  function popcount32(x){
+    // x is <= 2^25 so fits in 32-bit
+    x = x - ((x >>> 1) & 0x55555555);
+    x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+    return (((x + (x >>> 4)) & 0x0F0F0F0F) * 0x01010101) >>> 24;
+  }
+
+  function isSolvedMasks(usedMask, gearMask){
+    // must use all pieces (i.e. occupy exactly 25? no, board can have empty spots because '-' holes)
+    // But rule from index.html: all 7 pieces must be placed.
+    // Here we are in leaf where remaining==0, so ok.
+
+    const idxA = BIG_A_TOUCH.r * W + BIG_A_TOUCH.c;
+    const idxB = BIG_B_TOUCH.r * W + BIG_B_TOUCH.c;
+    const bitA = 1 << idxA;
+    const bitB = 1 << idxB;
+
+    if((gearMask & bitA) === 0) return false;
+    if((gearMask & bitB) === 0) return false;
+
+    return gearConnected(gearMask, idxA, idxB);
+  }
+
+  function gearConnected(gearMask, startIdx, goalIdx){
+    const q = [startIdx];
+    const seen = new Set([startIdx]);
+
+    while(q.length){
+      const cur = q.shift();
+      if(cur === goalIdx) return true;
+      const r = Math.floor(cur / W);
+      const c = cur % W;
+      const nbr = [
+        [r-1,c], [r+1,c], [r,c-1], [r,c+1]
+      ];
+      for(const [rr,cc] of nbr){
+        if(rr<0||cc<0||rr>=H||cc>=W) continue;
+        const ni = rr*W + cc;
+        if(seen.has(ni)) continue;
+        const bit = 1 << ni;
+        if((gearMask & bit) === 0) continue;
+        seen.add(ni);
+        q.push(ni);
+      }
+    }
+    return false;
   }
 
   // ===== UI helpers =====

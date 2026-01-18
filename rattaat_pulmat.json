@@ -13,175 +13,41 @@
   "puzzles": [
     {
       "id": "001",
-      "name": "junior 26",
+      "name": "Junior 46",
       "pieces": [
-        {
-          "id": "r",
-          "rot": 180,
-          "mirror": true,
-          "anchor": 1
-        },
-        {
-          "id": "s",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 6
-        },
-        {
-          "id": "v",
-          "rot": 90,
-          "mirror": true,
-          "anchor": 9
-        }
-      ]
-    },
-    {
-      "id": "002",
-      "name": "junior 27",
-      "pieces": [
-        {
-          "id": "k",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 11
-        },
-        {
-          "id": "r",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "v",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 17
-        }
-      ]
-    },
-    {
-      "id": "003",
-      "name": "junior 28",
-      "pieces": [
-        {
-          "id": "k",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 6
-        },
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 1
-        },
         {
           "id": "p",
-          "rot": 270,
+          "rot": 180,
           "mirror": false,
-          "anchor": 19
-        }
-      ]
-    },
-    {
-      "id": "004",
-      "name": "junior 25",
-      "pieces": [
+          "anchor": 13
+        },
         {
           "id": "r",
           "rot": 270,
-          "mirror": false,
-          "anchor": 6
+          "mirror": true,
+          "anchor": 4
         },
         {
           "id": "s",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 3
-        },
-        {
-          "id": "v",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 8
-        }
-      ]
-    },
-    {
-      "id": "005",
-      "name": "junior 29",
-      "pieces": [
-        {
-          "id": "k",
           "rot": 180,
           "mirror": false,
           "anchor": 2
-        },
-        {
-          "id": "r",
-          "rot": 270,
-          "mirror": true,
-          "anchor": 4
-        },
-        {
-          "id": "v",
-          "rot": 90,
-          "mirror": true,
-          "anchor": 14
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 52,
+        "backtracks": 19,
+        "decoys": 1,
+        "gearAdjacentCandidates": 11,
+        "firstChoices": 6
+      }
     },
     {
-      "id": "006",
-      "name": "junior 30",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 12
-        },
-        {
-          "id": "p",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "t",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 19
-        }
-      ]
-    },
-    {
-      "id": "007",
-      "name": "junior 31",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "t",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 19
-        },
-        {
-          "id": "v",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 16
-        }
-      ]
-    },
-    {
-      "id": "008",
-      "name": "junior 32",
+      "id": "002",
+      "name": "Junior 32",
       "pieces": [
         {
           "id": "o",
@@ -201,107 +67,55 @@
           "mirror": true,
           "anchor": 3
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 154,
+        "backtracks": 62,
+        "decoys": 3,
+        "gearAdjacentCandidates": 0,
+        "firstChoices": 17
+      }
     },
     {
-      "id": "009",
-      "name": "junior 33",
+      "id": "003",
+      "name": "Expert 68",
       "pieces": [
         {
-          "id": "o",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 12
-        },
-        {
-          "id": "p",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 19
-        }
-      ]
-    },
-    {
-      "id": "010",
-      "name": "junior 34",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 21
-        },
-        {
-          "id": "s",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 7
-        }
-      ]
-    },
-    {
-      "id": "011",
-      "name": "junior 35",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 6
-        },
-        {
-          "id": "p",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 13
-        }
-      ]
-    },
-    {
-      "id": "012",
-      "name": "junior 36",
-      "pieces": [
-        {
-          "id": "r",
-          "rot": 270,
-          "mirror": true,
-          "anchor": 4
-        },
-        {
-          "id": "v",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 11
-        }
-      ]
-    },
-    {
-      "id": "013",
-      "name": "junior 37",
-      "pieces": [
-        {
-          "id": "s",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "t",
+          "id": "k",
           "rot": 90,
           "mirror": false,
           "anchor": 4
         },
         {
-          "id": "v",
-          "rot": 90,
-          "mirror": true,
-          "anchor": 9
+          "id": "p",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 319,
+        "backtracks": 85,
+        "decoys": 3,
+        "gearAdjacentCandidates": 0,
+        "firstChoices": 18
+      }
     },
     {
-      "id": "014",
-      "name": "junior 38",
+      "id": "004",
+      "name": "Junior 38",
       "pieces": [
         {
           "id": "k",
@@ -321,11 +135,343 @@
           "mirror": false,
           "anchor": 11
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 212,
+        "backtracks": 79,
+        "decoys": 3,
+        "gearAdjacentCandidates": 4,
+        "firstChoices": 18
+      }
+    },
+    {
+      "id": "005",
+      "name": "Junior 25",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        },
+        {
+          "id": "v",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 8
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 10,
+        "backtracks": 2,
+        "decoys": 3,
+        "gearAdjacentCandidates": 7,
+        "firstChoices": 1
+      }
+    },
+    {
+      "id": "006",
+      "name": "Junior 26",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 1
+        },
+        {
+          "id": "s",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 9
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 36,
+        "backtracks": 10,
+        "decoys": 3,
+        "gearAdjacentCandidates": 9,
+        "firstChoices": 4
+      }
+    },
+    {
+      "id": "007",
+      "name": "Junior 27",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "r",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 17
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 70,
+        "backtracks": 21,
+        "decoys": 3,
+        "gearAdjacentCandidates": 11,
+        "firstChoices": 11
+      }
+    },
+    {
+      "id": "008",
+      "name": "Expert 57",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 5
+        },
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 920,
+        "backtracks": 387,
+        "decoys": 3,
+        "gearAdjacentCandidates": 11,
+        "firstChoices": 21
+      }
+    },
+    {
+      "id": "009",
+      "name": "Junior 45",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 277,
+        "backtracks": 92,
+        "decoys": 3,
+        "gearAdjacentCandidates": 14,
+        "firstChoices": 17
+      }
+    },
+    {
+      "id": "010",
+      "name": "Expert 67",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 9
+        },
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": true,
+          "anchor": 1
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 193,
+        "backtracks": 72,
+        "decoys": 3,
+        "gearAdjacentCandidates": 18,
+        "firstChoices": 15
+      }
+    },
+    {
+      "id": "011",
+      "name": "Junior 28",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 245,
+        "backtracks": 73,
+        "decoys": 3,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 16
+      }
+    },
+    {
+      "id": "012",
+      "name": "Expert  61",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "t",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1322,
+        "backtracks": 516,
+        "decoys": 3,
+        "gearAdjacentCandidates": 22,
+        "firstChoices": 25
+      }
+    },
+    {
+      "id": "013",
+      "name": "Junior 51",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 7
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 680,
+        "backtracks": 273,
+        "decoys": 3,
+        "gearAdjacentCandidates": 25,
+        "firstChoices": 15
+      }
+    },
+    {
+      "id": "014",
+      "name": "Junior 48",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "p",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 196,
+        "backtracks": 63,
+        "decoys": 5,
+        "gearAdjacentCandidates": 3,
+        "firstChoices": 15
+      }
     },
     {
       "id": "015",
-      "name": "junior 39",
+      "name": "Junior 40",
       "pieces": [
         {
           "id": "o",
@@ -340,280 +486,370 @@
           "anchor": 19
         },
         {
-          "id": "v",
-          "rot": 90,
+          "id": "r",
+          "rot": 0,
           "mirror": true,
-          "anchor": 7
+          "anchor": 1
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 121,
+        "backtracks": 51,
+        "decoys": 5,
+        "gearAdjacentCandidates": 9,
+        "firstChoices": 12
+      }
     },
     {
       "id": "016",
-      "name": "junior 40",
+      "name": "Junior 44",
       "pieces": [
         {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 21
-        },
-        {
           "id": "p",
-          "rot": 270,
+          "rot": 90,
           "mirror": false,
-          "anchor": 19
+          "anchor": 16
         },
         {
-          "id": "r",
-          "rot": 0,
+          "id": "v",
+          "rot": 90,
           "mirror": true,
-          "anchor": 1
+          "anchor": 4
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 442,
+        "backtracks": 177,
+        "decoys": 7,
+        "gearAdjacentCandidates": 3,
+        "firstChoices": 17
+      }
     },
     {
       "id": "017",
-      "name": "junior 41",
+      "name": "Expert 66",
       "pieces": [
         {
           "id": "k",
-          "rot": 90,
+          "rot": 270,
           "mirror": false,
-          "anchor": 14
+          "anchor": 6
         },
         {
           "id": "o",
-          "rot": 270,
+          "rot": 180,
           "mirror": false,
-          "anchor": 11
+          "anchor": 1
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 4
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 204,
+        "backtracks": 66,
+        "decoys": 7,
+        "gearAdjacentCandidates": 7,
+        "firstChoices": 14
+      }
     },
     {
       "id": "018",
-      "name": "junior 42",
+      "name": "Junior 39",
       "pieces": [
         {
           "id": "o",
-          "rot": 90,
+          "rot": 0,
           "mirror": false,
-          "anchor": 11
+          "anchor": 21
         },
         {
-          "id": "s",
-          "rot": 90,
+          "id": "p",
+          "rot": 270,
           "mirror": false,
-          "anchor": 14
+          "anchor": 19
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 7
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 77,
+        "backtracks": 25,
+        "decoys": 7,
+        "gearAdjacentCandidates": 8,
+        "firstChoices": 8
+      }
     },
     {
       "id": "019",
-      "name": "junior 43",
+      "name": "Junior 36",
       "pieces": [
-        {
-          "id": "k",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 2
-        },
-        {
-          "id": "o",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 21
-        }
-      ]
-    },
-    {
-      "id": "020",
-      "name": "junior 44",
-      "pieces": [
-        {
-          "id": "p",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 16
-        },
-        {
-          "id": "v",
-          "rot": 90,
-          "mirror": true,
-          "anchor": 4
-        }
-      ]
-    },
-    {
-      "id": "021",
-      "name": "junior 45",
-      "pieces": [
-        {
-          "id": "k",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 16
-        },
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "t",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 19
-        }
-      ]
-    },
-    {
-      "id": "022",
-      "name": "junior 46",
-      "pieces": [
-        {
-          "id": "p",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 13
-        },
         {
           "id": "r",
           "rot": 270,
           "mirror": true,
           "anchor": 4
         },
+        {
+          "id": "v",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 228,
+        "backtracks": 97,
+        "decoys": 7,
+        "gearAdjacentCandidates": 9,
+        "firstChoices": 9
+      }
+    },
+    {
+      "id": "020",
+      "name": "Expert 77",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 16
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 720,
+        "backtracks": 249,
+        "decoys": 7,
+        "gearAdjacentCandidates": 10,
+        "firstChoices": 18
+      }
+    },
+    {
+      "id": "021",
+      "name": "Junior 53",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 19
+        },
+        {
+          "id": "v",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 3
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 114,
+        "backtracks": 42,
+        "decoys": 7,
+        "gearAdjacentCandidates": 12,
+        "firstChoices": 15
+      }
+    },
+    {
+      "id": "022",
+      "name": "Junior 31",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 19
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 16
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 129,
+        "backtracks": 47,
+        "decoys": 7,
+        "gearAdjacentCandidates": 13,
+        "firstChoices": 16
+      }
+    },
+    {
+      "id": "023",
+      "name": "Junior 35",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 13
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 173,
+        "backtracks": 77,
+        "decoys": 7,
+        "gearAdjacentCandidates": 14,
+        "firstChoices": 12
+      }
+    },
+    {
+      "id": "024",
+      "name": "Expert 59",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 13
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 173,
+        "backtracks": 77,
+        "decoys": 7,
+        "gearAdjacentCandidates": 14,
+        "firstChoices": 12
+      }
+    },
+    {
+      "id": "025",
+      "name": "Junior 37",
+      "pieces": [
         {
           "id": "s",
           "rot": 180,
           "mirror": false,
-          "anchor": 2
-        }
-      ]
-    },
-    {
-      "id": "023",
-      "name": "junior 47",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 2
-        },
-        {
-          "id": "p",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 16
+          "anchor": 1
         },
         {
           "id": "t",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 19
-        }
-      ]
-    },
-    {
-      "id": "024",
-      "name": "junior 48",
-      "pieces": [
-        {
-          "id": "k",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 3
-        },
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 21
-        },
-        {
-          "id": "p",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 1
-        }
-      ]
-    },
-    {
-      "id": "025",
-      "name": "junior 49",
-      "pieces": [
-        {
-          "id": "p",
           "rot": 90,
           "mirror": false,
-          "anchor": 16
+          "anchor": 4
         },
         {
-          "id": "r",
-          "rot": 0,
+          "id": "v",
+          "rot": 90,
           "mirror": true,
-          "anchor": 2
+          "anchor": 9
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 81,
+        "backtracks": 25,
+        "decoys": 7,
+        "gearAdjacentCandidates": 16,
+        "firstChoices": 14
+      }
     },
     {
       "id": "026",
-      "name": "junior 50",
+      "name": "Junior 30",
       "pieces": [
         {
           "id": "o",
-          "rot": 90,
+          "rot": 0,
           "mirror": false,
-          "anchor": 6
+          "anchor": 12
         },
         {
           "id": "p",
           "rot": 90,
           "mirror": false,
-          "anchor": 4
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 53,
+        "backtracks": 13,
+        "decoys": 7,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 8
+      }
     },
     {
       "id": "027",
-      "name": "junior 51",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 6
-        },
-        {
-          "id": "t",
-          "rot": 270,
-          "mirror": false,
-          "anchor": 7
-        }
-      ]
-    },
-    {
-      "id": "028",
-      "name": "junior 52",
-      "pieces": [
-        {
-          "id": "o",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 2
-        },
-        {
-          "id": "t",
-          "rot": 90,
-          "mirror": false,
-          "anchor": 16
-        }
-      ]
-    },
-    {
-      "id": "029",
-      "name": "junior 53",
+      "name": "Expert 74",
       "pieces": [
         {
           "id": "o",
@@ -622,46 +858,82 @@
           "anchor": 1
         },
         {
-          "id": "t",
+          "id": "p",
           "rot": 0,
-          "mirror": false,
-          "anchor": 19
-        },
-        {
-          "id": "v",
-          "rot": 180,
-          "mirror": true,
-          "anchor": 3
-        }
-      ]
-    },
-    {
-      "id": "030",
-      "name": "junior 54",
-      "pieces": [
-        {
-          "id": "k",
-          "rot": 180,
-          "mirror": false,
-          "anchor": 7
-        },
-        {
-          "id": "o",
-          "rot": 0,
-          "mirror": false,
-          "anchor": 1
-        },
-        {
-          "id": "v",
-          "rot": 90,
           "mirror": false,
           "anchor": 4
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2679,
+        "backtracks": 1002,
+        "decoys": 7,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 30
+      }
     },
     {
-      "id": "031",
-      "name": "junior 55",
+      "id": "028",
+      "name": "Expert 72",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 8
+        },
+        {
+          "id": "t",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 85,
+        "backtracks": 34,
+        "decoys": 7,
+        "gearAdjacentCandidates": 19,
+        "firstChoices": 6
+      }
+    },
+    {
+      "id": "029",
+      "name": "Expert 80",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 7
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 85,
+        "backtracks": 34,
+        "decoys": 7,
+        "gearAdjacentCandidates": 19,
+        "firstChoices": 6
+      }
+    },
+    {
+      "id": "030",
+      "name": "Junior 55",
       "pieces": [
         {
           "id": "k",
@@ -675,11 +947,795 @@
           "mirror": false,
           "anchor": 12
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 829,
+        "backtracks": 322,
+        "decoys": 7,
+        "gearAdjacentCandidates": 19,
+        "firstChoices": 15
+      }
+    },
+    {
+      "id": "031",
+      "name": "Expert 83",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "t",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 8
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 391,
+        "backtracks": 156,
+        "decoys": 7,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 11
+      }
     },
     {
       "id": "032",
-      "name": "junior 56",
+      "name": "Master 113",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 9
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2340,
+        "backtracks": 866,
+        "decoys": 7,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 24
+      }
+    },
+    {
+      "id": "033",
+      "name": "Expert 85",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "r",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 2
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 907,
+        "backtracks": 316,
+        "decoys": 7,
+        "gearAdjacentCandidates": 29,
+        "firstChoices": 18
+      }
+    },
+    {
+      "id": "034",
+      "name": "Expert 75",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 23
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2245,
+        "backtracks": 784,
+        "decoys": 7,
+        "gearAdjacentCandidates": 29,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "035",
+      "name": "Junior 54",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 7
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 4
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 253,
+        "backtracks": 86,
+        "decoys": 11,
+        "gearAdjacentCandidates": 11,
+        "firstChoices": 14
+      }
+    },
+    {
+      "id": "036",
+      "name": "Expert 76",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 813,
+        "backtracks": 302,
+        "decoys": 11,
+        "gearAdjacentCandidates": 16,
+        "firstChoices": 18
+      }
+    },
+    {
+      "id": "037",
+      "name": "Junior 34",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "s",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 7
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 355,
+        "backtracks": 148,
+        "decoys": 11,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 9
+      }
+    },
+    {
+      "id": "038",
+      "name": "Expert  63",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 7
+        },
+        {
+          "id": "s",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 18
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 245,
+        "backtracks": 124,
+        "decoys": 11,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 7
+      }
+    },
+    {
+      "id": "039",
+      "name": "Master 115",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 6
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 928,
+        "backtracks": 379,
+        "decoys": 11,
+        "gearAdjacentCandidates": 31,
+        "firstChoices": 21
+      }
+    },
+    {
+      "id": "040",
+      "name": "Junior 47",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "p",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 291,
+        "backtracks": 74,
+        "decoys": 15,
+        "gearAdjacentCandidates": 9,
+        "firstChoices": 21
+      }
+    },
+    {
+      "id": "041",
+      "name": "Junior 33",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 12
+        },
+        {
+          "id": "p",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 589,
+        "backtracks": 218,
+        "decoys": 15,
+        "gearAdjacentCandidates": 21,
+        "firstChoices": 12
+      }
+    },
+    {
+      "id": "042",
+      "name": "Expert  62",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1197,
+        "backtracks": 460,
+        "decoys": 15,
+        "gearAdjacentCandidates": 27,
+        "firstChoices": 22
+      }
+    },
+    {
+      "id": "043",
+      "name": "Expert 88",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 7815,
+        "backtracks": 3011,
+        "decoys": 15,
+        "gearAdjacentCandidates": 37,
+        "firstChoices": 22
+      }
+    },
+    {
+      "id": "044",
+      "name": "Junior 29",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "r",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 4
+        },
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": true,
+          "anchor": 14
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 242,
+        "backtracks": 93,
+        "decoys": 19,
+        "gearAdjacentCandidates": 10,
+        "firstChoices": 16
+      }
+    },
+    {
+      "id": "045",
+      "name": "Junior 49",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 16
+        },
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": true,
+          "anchor": 2
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 304,
+        "backtracks": 143,
+        "decoys": 19,
+        "gearAdjacentCandidates": 12,
+        "firstChoices": 13
+      }
+    },
+    {
+      "id": "046",
+      "name": "Expert 65",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 12
+        },
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "v",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 18
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 343,
+        "backtracks": 122,
+        "decoys": 19,
+        "gearAdjacentCandidates": 12,
+        "firstChoices": 17
+      }
+    },
+    {
+      "id": "047",
+      "name": "Expert 69",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "s",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 12
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 227,
+        "backtracks": 98,
+        "decoys": 19,
+        "gearAdjacentCandidates": 18,
+        "firstChoices": 5
+      }
+    },
+    {
+      "id": "048",
+      "name": "Expert 78",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "r",
+          "rot": 180,
+          "mirror": true,
+          "anchor": 18
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1488,
+        "backtracks": 619,
+        "decoys": 23,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 25
+      }
+    },
+    {
+      "id": "049",
+      "name": "Expert 71",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 3
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1488,
+        "backtracks": 619,
+        "decoys": 23,
+        "gearAdjacentCandidates": 23,
+        "firstChoices": 25
+      }
+    },
+    {
+      "id": "050",
+      "name": "Expert 79",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "r",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1488,
+        "backtracks": 619,
+        "decoys": 23,
+        "gearAdjacentCandidates": 26,
+        "firstChoices": 25
+      }
+    },
+    {
+      "id": "051",
+      "name": "Junior 41",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        },
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2519,
+        "backtracks": 836,
+        "decoys": 27,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "052",
+      "name": "Expert 58",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        },
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2519,
+        "backtracks": 836,
+        "decoys": 27,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "053",
+      "name": "Junior 42",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 11
+        },
+        {
+          "id": "s",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2519,
+        "backtracks": 836,
+        "decoys": 27,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "054",
+      "name": "Junior 43",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 21
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1499,
+        "backtracks": 528,
+        "decoys": 31,
+        "gearAdjacentCandidates": 11,
+        "firstChoices": 20
+      }
+    },
+    {
+      "id": "055",
+      "name": "Master 114",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 18
+        },
+        {
+          "id": "v",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 11
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1915,
+        "backtracks": 671,
+        "decoys": 31,
+        "gearAdjacentCandidates": 15,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "056",
+      "name": "Junior 50",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "p",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 4
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1404,
+        "backtracks": 487,
+        "decoys": 31,
+        "gearAdjacentCandidates": 17,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "057",
+      "name": "Junior 52",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "t",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 16
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1404,
+        "backtracks": 487,
+        "decoys": 31,
+        "gearAdjacentCandidates": 18,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "058",
+      "name": "Junior 56",
       "pieces": [
         {
           "id": "o",
@@ -693,7 +1749,373 @@
           "mirror": false,
           "anchor": 4
         }
-      ]
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1404,
+        "backtracks": 487,
+        "decoys": 31,
+        "gearAdjacentCandidates": 18,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "059",
+      "name": "Expert 86",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 2
+        },
+        {
+          "id": "o",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 23
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1499,
+        "backtracks": 528,
+        "decoys": 31,
+        "gearAdjacentCandidates": 23,
+        "firstChoices": 20
+      }
+    },
+    {
+      "id": "060",
+      "name": "Expert 82",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 6
+        },
+        {
+          "id": "t",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 19
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1404,
+        "backtracks": 487,
+        "decoys": 31,
+        "gearAdjacentCandidates": 28,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "061",
+      "name": "Expert 60",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 15
+        },
+        {
+          "id": "s",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2563,
+        "backtracks": 928,
+        "decoys": 35,
+        "gearAdjacentCandidates": 33,
+        "firstChoices": 23
+      }
+    },
+    {
+      "id": "062",
+      "name": "Master 120",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 6
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2244,
+        "backtracks": 1140,
+        "decoys": 39,
+        "gearAdjacentCandidates": 35,
+        "firstChoices": 21
+      }
+    },
+    {
+      "id": "063",
+      "name": "Master 117",
+      "pieces": [
+        {
+          "id": "v",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 3
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": false,
+        "solutions": 2,
+        "nodes": 2484,
+        "backtracks": 1024,
+        "decoys": 41,
+        "gearAdjacentCandidates": 27,
+        "firstChoices": 30
+      }
+    },
+    {
+      "id": "064",
+      "name": "Expert 73",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 21
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2277,
+        "backtracks": 817,
+        "decoys": 43,
+        "gearAdjacentCandidates": 20,
+        "firstChoices": 24
+      }
+    },
+    {
+      "id": "065",
+      "name": "Expert 70",
+      "pieces": [
+        {
+          "id": "p",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "r",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 6
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 714,
+        "backtracks": 347,
+        "decoys": 43,
+        "gearAdjacentCandidates": 27,
+        "firstChoices": 21
+      }
+    },
+    {
+      "id": "066",
+      "name": "Expert 81",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 1
+        },
+        {
+          "id": "t",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 16
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2416,
+        "backtracks": 825,
+        "decoys": 43,
+        "gearAdjacentCandidates": 27,
+        "firstChoices": 29
+      }
+    },
+    {
+      "id": "067",
+      "name": "Expert 84",
+      "pieces": [
+        {
+          "id": "k",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 18
+        },
+        {
+          "id": "t",
+          "rot": 270,
+          "mirror": false,
+          "anchor": 16
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 2548,
+        "backtracks": 839,
+        "decoys": 47,
+        "gearAdjacentCandidates": 19,
+        "firstChoices": 25
+      }
+    },
+    {
+      "id": "068",
+      "name": "Master 116",
+      "pieces": [
+        {
+          "id": "o",
+          "rot": 180,
+          "mirror": false,
+          "anchor": 21
+        },
+        {
+          "id": "v",
+          "rot": 270,
+          "mirror": true,
+          "anchor": 1
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 1992,
+        "backtracks": 733,
+        "decoys": 55,
+        "gearAdjacentCandidates": 16,
+        "firstChoices": 27
+      }
+    },
+    {
+      "id": "069",
+      "name": "Master 119",
+      "pieces": [
+        {
+          "id": "s",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 2
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 4759,
+        "backtracks": 2263,
+        "decoys": 95,
+        "gearAdjacentCandidates": 38,
+        "firstChoices": 22
+      }
+    },
+    {
+      "id": "070",
+      "name": "Expert 64",
+      "pieces": [
+        {
+          "id": "s",
+          "rot": 0,
+          "mirror": false,
+          "anchor": 12
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 3083,
+        "backtracks": 1442,
+        "decoys": 111,
+        "gearAdjacentCandidates": 27,
+        "firstChoices": 16
+      }
+    },
+    {
+      "id": "071",
+      "name": "Master 118",
+      "pieces": [
+        {
+          "id": "v",
+          "rot": 90,
+          "mirror": false,
+          "anchor": 14
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 11153,
+        "backtracks": 4519,
+        "decoys": 143,
+        "gearAdjacentCandidates": 26,
+        "firstChoices": 30
+      }
+    },
+    {
+      "id": "072",
+      "name": "Expert 87",
+      "pieces": [
+        {
+          "id": "r",
+          "rot": 0,
+          "mirror": true,
+          "anchor": 18
+        }
+      ],
+      "metrics": {
+        "solvable": true,
+        "unique": true,
+        "solutions": 1,
+        "nodes": 13889,
+        "backtracks": 5479,
+        "decoys": 207,
+        "gearAdjacentCandidates": 34,
+        "firstChoices": 28
+      }
     }
   ]
 }

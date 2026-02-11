@@ -515,7 +515,7 @@
       "pieces": [
         {
           "id": "o",
-          "rot": 90,
+          "rot": 270,
           "mirror": false,
           "anchor": 1
         },
